@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -34,23 +35,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         // TODO (29) Use findViewById to get a reference to mSearchBoxEditText
 
-        bookname = (EditText) (findViewById(R.id.search));
-        results = (TextView) (findViewById(R.id.results));
-        //url = findViewById(R.id.url);
+        bookname =  findViewById(R.id.searchE);
+        results =  findViewById(R.id.results);
+        url = findViewById(R.id.url);
         button = findViewById(R.id.searchb);
         button.setOnClickListener(this);
-
-        // getWeather();
+        getBook();
     }
 
     private void getBook(){
-        String cityname = bookname.getText().toString();
-        URL urlcreated = NetworkUtils.buildUrl(cityname);
+        String book = bookname.getText().toString();
+        URL urlcreated = NetworkUtils.buildUrl(book);
         url.setText(urlcreated.toString());
         new booksearch().execute(urlcreated);
     }
-
-
 
     public class booksearch extends AsyncTask<URL, Void, String> {
 
@@ -71,19 +69,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         protected void onPostExecute(String result) {
             if (result != null && !result.equals("")) {
-
-                results.setText(result);
-                url.setCursorVisible(false);
+                JSONObject jsonObj = null;
+                try {
+                    jsonObj = new JSONObject(result);
+                    JSONArray items = jsonObj.getJSONArray("items");
+                    JSONObject  item1 = items.getJSONObject(0);
+                    JSONObject accessInfo = item1.getJSONObject("accessInfo");
+                    JSONObject pdf = accessInfo.getJSONObject("pdf");
+                    String webReaderLink = accessInfo.getString("webReaderLink");
+                    String s = "pdf info : " + pdf + "\n" + "read online :" + "\n" + webReaderLink ;
+                    results.setText(s);
+                    url.setCursorVisible(false);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    results.setText("NOT FOUND");
+                    url.setCursorVisible(false);
+                }
             }
         }
-
     }
-
     @Override
     public void onClick(View view)
     {
         switch (view.getId()) {
-            case R.id.button:
+            case R.id.searchb:
                 getBook();
         }
     }
