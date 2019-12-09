@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name="com.example.android.enlight_me.MainActivity">
+        <activity android:name="com.example.android.enlight_me.MainActivity" >
+        </activity>
         <activity android:name=".Register"></activity>
         <activity
             android:name=".ui.login.LoginActivity"
