@@ -1,22 +1,24 @@
 package com.example.android.enlight_me;
 import com.example.android.enlight_me.NetworkUtils;
 import androidx.appcompat.app.AppCompatActivity;
-
+import com.example.android.enlight_me.ResultsList;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import android.widget.ArrayAdapter;
 import java.io.IOException;
 import java.net.URL;
-
+import java.util.ArrayList;
 
 /*
 
@@ -24,6 +26,7 @@ import java.net.URL;
  */
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener  {
+    public static final String EXTRA_MESSAGE = "com.example.android.enlight_me..MESSAGE";
 
     EditText bookname ;
     TextView results;
@@ -68,23 +71,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // COMPLETED (3) Override onPostExecute to display the results in the TextView
         @Override
         protected void onPostExecute(String result) {
+
             if (result != null && !result.equals("")) {
-                JSONObject jsonObj = null;
-                try {
-                    jsonObj = new JSONObject(result);
-                    JSONArray items = jsonObj.getJSONArray("items");
-                    JSONObject  item1 = items.getJSONObject(0);
-                    JSONObject accessInfo = item1.getJSONObject("accessInfo");
-                    JSONObject pdf = accessInfo.getJSONObject("pdf");
-                    String webReaderLink = accessInfo.getString("webReaderLink");
-                    String s = "pdf info : " + pdf + "\n" + "read online :" + "\n" + webReaderLink ;
-                    results.setText(s);
-                    url.setCursorVisible(false);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    results.setText("NOT FOUND");
-                    url.setCursorVisible(false);
-                }
+                Intent intent;
+                intent = new Intent(MainActivity.this, ResultsList.class);
+                intent.putExtra(EXTRA_MESSAGE, result);
+                startActivity(intent);
             }
         }
     }

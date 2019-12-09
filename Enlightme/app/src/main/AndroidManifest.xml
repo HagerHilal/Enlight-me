@@ -13,16 +13,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+
+        <activity android:name="com.example.android.enlight_me.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAmhi3tG8hjd_3NrGGV3yL0ggVjcHlzoGY"/>
+        <activity android:name="com.example.android.enlight_me.ResultsList">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+
     </application>
 
 </manifest>
