@@ -16,6 +16,7 @@ import android.widget.TextView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.net.URL;
@@ -36,10 +37,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Intent mainIntent = getIntent();
-        String email = mainIntent.getStringExtra("username");
+        String username = mainIntent.getStringExtra("username");
+        String email = mainIntent.getStringExtra("email");
+
         System.out.println("email="+email);
         // TODO (29) Use findViewById to get a reference to mSearchBoxEditText
+        final TextView loggedin=findViewById(R.id.logged);
+        final Button loggedout=findViewById(R.id.logout);
+        loggedin.setText(username+" logged in");
+        loggedout.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+
+                Intent mainIntent=new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(mainIntent);
+                finish();
+
+            }
+        });
+
 
         bookname =  findViewById(R.id.searchE);
         results =  findViewById(R.id.results);
@@ -102,4 +122,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 getBook();
         }
     }
+
+
 }

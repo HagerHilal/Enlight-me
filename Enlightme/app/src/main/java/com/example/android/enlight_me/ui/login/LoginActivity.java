@@ -47,12 +47,13 @@ public class LoginActivity extends AppCompatActivity {
     String password[] = new String[50];
     String username[] = new String[50];
     int index=9999;
+    String user="";
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
 
 
 
@@ -157,11 +158,14 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 if (loginResult.getSuccess() != null) {
                     updateUiWithUser(loginResult.getSuccess());
-                    String username  = usernameEditText.getText().toString();
+                    String username  =user;
+                            //usernameEditText.getText().toString();
+                    String email  =usernameEditText.getText().toString();
 
 
                     Intent mainIntent=new Intent(LoginActivity.this, MainActivity.class);
                     mainIntent.putExtra("username", username);
+                    mainIntent.putExtra("email", email);
 
                     startActivity(mainIntent);
              //       finish();
@@ -220,6 +224,7 @@ public class LoginActivity extends AppCompatActivity {
 
                             flag=1;
                             index=i;
+                            user=username[index];
                         }
                     }
                 }
