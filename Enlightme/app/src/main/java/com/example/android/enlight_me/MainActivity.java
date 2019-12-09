@@ -1,7 +1,10 @@
 package com.example.android.enlight_me;
 import com.example.android.enlight_me.NetworkUtils;
+import com.example.android.enlight_me.ui.login.LoginActivity;
+
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.android.enlight_me.ResultsList;
+
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -36,6 +39,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Intent mainIntent = getIntent();
+        String email = mainIntent.getStringExtra("username");
+        System.out.println("email="+email);
         // TODO (29) Use findViewById to get a reference to mSearchBoxEditText
 
         bookname =  findViewById(R.id.searchE);

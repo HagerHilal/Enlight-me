@@ -5,8 +5,8 @@ const MongoClient = require('mongodb').MongoClient;
 const users = require('./routes/users')
 const books = require('./routes/books')
 const app = express()
-
 const db = require('./config/keys').mongoURI
+const validator = require('./validations/userValidations')
 // console.log(db);
 mongoose
    .connect(db,{useNewUrlParser: true})
@@ -22,13 +22,19 @@ mongoose
   app.get('/', (req, res) => {
 
     res.send(`<h1>♥ Welcome to Enlight-me ♥</h1>
-    <a href="/users">Users</a>
+    <a href="/users/all">Users</a>
     <a href="/books">Books</a>
     `);
   });
 
+  
+  
+  
+
   app.use('/books', books),
   app.use('/users', users)
+  
+
 
   app.use((req, res) => {
 
